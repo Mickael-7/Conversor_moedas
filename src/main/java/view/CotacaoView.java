@@ -12,6 +12,7 @@ import java.util.List;
 public class CotacaoView {
     private static JComboBox<String> comboBox1;
     private static JComboBox<String> comboBox2;
+    private static JTextField textField;
     private static Map<String, List<String>> opcoesDeConversao;
 
     public static void main(String[] args) {
@@ -37,10 +38,12 @@ public class CotacaoView {
 
         comboBox1 = new JComboBox<>(opcoes1);
         comboBox2 = new JComboBox<>(opcoes2);
+        textField = new JTextField();
 
         Dimension comboBoxDimension = new Dimension(150, 30);
         comboBox1.setPreferredSize(comboBoxDimension);
         comboBox2.setPreferredSize(comboBoxDimension);
+        textField.setPreferredSize(comboBoxDimension);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -51,11 +54,16 @@ public class CotacaoView {
         JLabel label2 = new JLabel("Para:");
         label2.setBounds(70, 200, 100, 90);
         comboBox2.setBounds(235, 220, 230, 60);
+        JLabel label3 = new JLabel("escolha o Valor a ser convertido:");
+        label3.setBounds(70, 300, 100, 90);
+        textField.setBounds(235, 320, 230, 30);
 
         panel.add(label1);
         panel.add(comboBox1);
         panel.add(label2);
         panel.add(comboBox2);
+        panel.add(label3);
+        panel.add(textField);
 
         panel.setPreferredSize(new Dimension(600, 400));
 
@@ -75,6 +83,8 @@ public class CotacaoView {
         if ((Integer) optionPane.getValue() == JOptionPane.OK_OPTION) {
             String escolha1 = (String) comboBox1.getSelectedItem();
             String escolha2 = (String) comboBox2.getSelectedItem();
+            double valor = Double.parseDouble(textField.getText());
+            System.out.println(valor);
             mostrarEscolhas(escolha1, escolha2);
         }
     }
