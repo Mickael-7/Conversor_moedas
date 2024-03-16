@@ -1,6 +1,7 @@
 package view;
 
 import controller.CotacaoController;
+import controller.DomainException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,24 +16,20 @@ public class CotacaoView {
     private static JTextField textField;
     private static Map<String, List<String>> opcoesDeConversao;
 
-    public static void main(String[] args) {
-        inicializarOpcoesDeConversao();
-        mostrarOpcoes();
-    }
-
-    private static void inicializarOpcoesDeConversao() {
+    public static void inicializarOpcoesDeConversao() {
         opcoesDeConversao = new HashMap<>();
-        opcoesDeConversao.put("USD", Arrays.asList("EUR", "XRP", "BTC", "ETH", "BRL"));
+        opcoesDeConversao.put("USD", Arrays.asList("BRL", "EUR", "JPY", "CAD"));
         opcoesDeConversao.put("BTC", Arrays.asList("USD", "EUR", "BRL"));
-        opcoesDeConversao.put("EUR", Arrays.asList("USD", "XRP", "ETH", "BRL"));
+        opcoesDeConversao.put("EUR", Arrays.asList("EUR", "XRP", "BTC", "ETH", "BRL"));
         opcoesDeConversao.put("ETH", Arrays.asList("USD", "EUR", "BRL"));
-        opcoesDeConversao.put("BRL", Arrays.asList("USD", "EUR", "BTC", "ETH"));
-        opcoesDeConversao.put("CAD", Arrays.asList("USD","EUR", "BRL"));
+        opcoesDeConversao.put("BRL", Arrays.asList("USD", "EUR", "CAD", "JPY"));
+        opcoesDeConversao.put("CAD", Arrays.asList("USD", "EUR", "BRL"));
         opcoesDeConversao.put("JPY", Arrays.asList("BRL", "USD", "EUR"));
-
     }
 
-    private static void mostrarOpcoes() {
+    public static void mostrarOpcoes() {
+        inicializarOpcoesDeConversao();
+
         String[] opcoes1 = {"USD", "BTC", "EUR", "ETH", "BRL", "CAD", "JPY"};
         String[] opcoes2 = {""};
 
@@ -54,8 +51,8 @@ public class CotacaoView {
         JLabel label2 = new JLabel("Para:");
         label2.setBounds(70, 200, 100, 90);
         comboBox2.setBounds(235, 220, 230, 60);
-        JLabel label3 = new JLabel("escolha o Valor a ser convertido:");
-        label3.setBounds(70, 300, 100, 90);
+        JLabel label3 = new JLabel("Digite o valor:");
+        label3.setBounds(70, 290, 100, 90);
         textField.setBounds(235, 320, 230, 30);
 
         panel.add(label1);
@@ -83,9 +80,19 @@ public class CotacaoView {
         if ((Integer) optionPane.getValue() == JOptionPane.OK_OPTION) {
             String escolha1 = (String) comboBox1.getSelectedItem();
             String escolha2 = (String) comboBox2.getSelectedItem();
-            double valor = Double.parseDouble(textField.getText());
-            System.out.println(valor);
-            mostrarEscolhas(escolha1, escolha2);
+            String valorTexto = textField.getText().trim();
+            if (!valorTexto.isEmpty()) {
+                try {
+                    double valor = Double.parseDouble(valorTexto);
+                    mostrarEscolhas(escolha1, escolha2, valor);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Digite um valor numérico válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    mostrarOpcoes();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Digite um valor para continuar.", "Erro", JOptionPane.ERROR_MESSAGE);
+                mostrarOpcoes();
+            }
         }
     }
 
@@ -96,23 +103,15 @@ public class CotacaoView {
     }
 
     private static String[] obterOpcoes2BaseadoEm(String escolha1) {
-        List<String> opcoes2 = opcoesDeConversao.get(escolha1);
-        if (opcoes2 == null) {
-            opcoes2 = Collections.emptyList();
-        }
+        List<String> opcoes2 = opcoesDeConversao.getOrDefault(escolha1, Collections.emptyList());
         return opcoes2.toArray(new String[0]);
     }
 
-    private static void mostrarEscolhas(String escolha1, String escolha2) {
+    private static void mostrarEscolhas(String escolha1, String escolha2, double valor) {
         try {
-            CotacaoController.buscarCotacoes(escolha1, escolha2);
+            CotacaoController.buscarCotacoes(escolha1, escolha2, valor);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Erro ao buscar cotações: " + e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            JOptionPane.showMessageDialog(null, "Erro ao buscar cotações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -11,7 +11,7 @@ import org.json.JSONObject;
 public class CotacaoController {
     private static final String API_URL = "https://economia.awesomeapi.com.br/json/last/";
 
-    public static void buscarCotacoes(String moeda1, String moeda2) {
+    public static void buscarCotacoes(String moeda1, String moeda2, Double valor ) {
         try {
             URL url = new URL(API_URL + moeda1 + "-" + moeda2);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -27,17 +27,17 @@ public class CotacaoController {
 
             JSONObject jsonResponse = new JSONObject(response.toString());
 
-            // Como estamos buscando apenas duas moedas, não é necessário um loop aqui
+
             JSONObject moedaData = jsonResponse.getJSONObject(moeda1 + moeda2);
-            exibirCotacao(moeda1, moeda2, moedaData);
+            exibirCotacao(moeda1, moeda2, moedaData, valor);
         } catch (Exception e) {
             exibirErro("Erro ao obter cotações: " + e.getMessage());
         }
     }
 
-    private static void exibirCotacao(String moeda1, String moeda2, JSONObject cotacaoMoedas) {
-        // Adicionei novamente o argumento moeda2
-        JOptionPane.showMessageDialog(null, "Cotação entre " + moeda1 + " e " + moeda2 + ": " + cotacaoMoedas.getDouble("bid"), "Resultado", JOptionPane.INFORMATION_MESSAGE);
+    private static void exibirCotacao(String moeda1, String moeda2, JSONObject cotacaoMoedas, Double valor) {
+
+        JOptionPane.showMessageDialog(null, "Cotação entre " + moeda1 + " e " + moeda2 + ": " + cotacaoMoedas.getDouble("bid") + " \nResultado da conversão: " + String.format("%.2f", valor * cotacaoMoedas.getDouble("bid")),  "Resultado", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private static void exibirErro(String mensagem) {
