@@ -13,3 +13,5 @@ _
 /src/main/java/controller/CotacaoController.java,4\9\492382c92fc7ccc5369a103a56ade8c1dd06200a
 S
 #src/main/java/view/CotacaoView.java,3\0\30275def1aa7731d63f7e169590810c08e4e5249
+L
+src/main/java/view/Igor.java,b\2\b2a278b70ddfb1a96b3fd137491e5d741de106c9
