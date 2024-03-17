@@ -75,6 +75,13 @@ public class CotacaoView {
                 atualizarOpcoesComboBox2();
             }
         });
+        convertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Chamando o método processarSelecao() quando o botão for clicado
+                processarSelecao();
+            }
+        });
 
         return panel;
     }
