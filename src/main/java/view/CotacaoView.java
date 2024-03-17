@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class CotacaoView {
     private static JComboBox<Moedas> comboBox1;
@@ -85,12 +85,20 @@ public class CotacaoView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 processarSelecao(resultadoLabel);
+            }
+        });
 
+
+        textField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                processarSelecao(resultadoLabel);
             }
         });
 
         return panel;
     }
+
 
     private static void exibirDialogo(JPanel panel) {
         JFrame frame = new JFrame("Escolha suas opções");
@@ -121,6 +129,7 @@ public class CotacaoView {
         }
     }
 
+
     private static void exibirMensagemErro(String mensagem, JLabel resultadoLabel) {
         JOptionPane.showMessageDialog(null, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
         resultadoLabel.setText("");
@@ -137,12 +146,15 @@ public class CotacaoView {
         return opcoes2.toArray(new Moedas[0]);
     }
 
-    private static void mostrarEscolhas(Moedas escolha1, Moedas escolha2, double valor, JLabel resultadoLabel) {
+    public static void mostrarEscolhas(Moedas escolha1, Moedas escolha2, double valor, JLabel resultadoLabel) {
         try {
             double resultado = CotacaoController.buscarCotacoes(escolha1.toString(), escolha2.toString(), valor);
-            resultadoLabel.setText(String.format("%.2f %s", resultado , escolha2 ));
+            resultadoLabel.setText(String.format("%.2f %s", resultado * valor, escolha2));
+
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar cotações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+
         }
     }
 }
