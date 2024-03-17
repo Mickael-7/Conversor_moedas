@@ -35,22 +35,25 @@ public class CotacaoView {
     }
 
     private static @NotNull JPanel configurarInterface() {
+        Locale.setDefault(Locale.ENGLISH);
         Moedas[] opcoes1 = {Moedas.USD, Moedas.BTC, Moedas.EUR, Moedas.ETH, Moedas.BRL, Moedas.CAD, Moedas.JPY};
         Moedas[] opcoes2 = {};
 
         comboBox1 = new JComboBox<>(opcoes1);
         comboBox2 = new JComboBox<>(opcoes2);
         textField = new JTextField();
+        JLabel resultadoLabel = new JLabel();
 
         JButton convertButton = new JButton("Converter");
 
         JPanel panel = new JPanel(new BorderLayout(10, 10));
-        JPanel formPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         JLabel label1 = new JLabel("Converter de:");
         JLabel label2 = new JLabel("Para:");
         JLabel label3 = new JLabel("Digite o valor:");
+        JLabel label4 = new JLabel("Resultado:");
 
         Dimension textFieldDimension = new Dimension(150, 30);
         textField.setPreferredSize(textFieldDimension);
@@ -61,6 +64,8 @@ public class CotacaoView {
         formPanel.add(comboBox2);
         formPanel.add(label3);
         formPanel.add(textField);
+        formPanel.add(label4);
+        formPanel.add(resultadoLabel);
 
         buttonPanel.add(convertButton);
 
@@ -75,10 +80,12 @@ public class CotacaoView {
                 atualizarOpcoesComboBox2();
             }
         });
+
         convertButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                processarSelecao();
+                processarSelecao(resultadoLabel);
+
             }
         });
 
@@ -94,25 +101,29 @@ public class CotacaoView {
         frame.setVisible(true);
     }
 
-    private static void processarSelecao() {
+    private static void processarSelecao(JLabel resultadoLabel) {
         Moedas escolha1 = (Moedas) comboBox1.getSelectedItem();
         Moedas escolha2 = (Moedas) comboBox2.getSelectedItem();
         String valorTexto = textField.getText().trim();
         if (!valorTexto.isEmpty()) {
             try {
                 double valor = Double.parseDouble(valorTexto);
-                mostrarEscolhas(escolha1, escolha2, valor);
+                if (valor <= 0) {
+                    exibirMensagemErro("Digite um valor positivo", resultadoLabel);
+                } else {
+                    mostrarEscolhas(escolha1, escolha2, valor, resultadoLabel);
+                }
             } catch (NumberFormatException e) {
-                exibirMensagemErro("Digite um valor numérico válido.");
+                exibirMensagemErro("Digite um valor numérico válido.", resultadoLabel);
             }
         } else {
-            exibirMensagemErro("Digite um valor para continuar.");
+            exibirMensagemErro("Digite um valor para continuar.", resultadoLabel);
         }
     }
 
-    private static void exibirMensagemErro(String mensagem) {
+    private static void exibirMensagemErro(String mensagem, JLabel resultadoLabel) {
         JOptionPane.showMessageDialog(null, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
-
+        resultadoLabel.setText("");
     }
 
     private static void atualizarOpcoesComboBox2() {
@@ -126,9 +137,10 @@ public class CotacaoView {
         return opcoes2.toArray(new Moedas[0]);
     }
 
-    private static void mostrarEscolhas(Moedas escolha1, Moedas escolha2, double valor) {
+    private static void mostrarEscolhas(Moedas escolha1, Moedas escolha2, double valor, JLabel resultadoLabel) {
         try {
-            CotacaoController.buscarCotacoes(escolha1.toString(), escolha2.toString(), valor);
+            double resultado = CotacaoController.buscarCotacoes(escolha1.toString(), escolha2.toString(), valor);
+            resultadoLabel.setText(String.format("%.2f %s", resultado , escolha2 ));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar cotações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }

@@ -11,11 +11,13 @@ import org.json.JSONObject;
 public class CotacaoController {
     private static final String API_URL = "https://economia.awesomeapi.com.br/json/last/";
 
-    public static void buscarCotacoes(String moeda1, String moeda2, Double valor ) {
+    public static double buscarCotacoes(String moeda1, String moeda2, Double valor ) {
+            JSONObject moedaData = null;
         try {
             URL url = new URL(API_URL + moeda1 + "-" + moeda2);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+            
 
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -28,19 +30,17 @@ public class CotacaoController {
                 in.close();
 
                 JSONObject jsonResponse = new JSONObject(response.toString());
-                JSONObject moedaData = jsonResponse.getJSONObject(moeda1 + moeda2);
-                exibirCotacao(moeda1, moeda2, moedaData, valor);
+                 moedaData =jsonResponse.getJSONObject(moeda1 + moeda2);
+              
             } else {
                 exibirErro("Erro na requisição à API: Código " + responseCode);
             }
         } catch (Exception e) {
             exibirErro("Erro ao obter cotações: " + e.getMessage());
         }
+        return moedaData.getDouble("bid");
     }
 
-    private static void exibirCotacao(String moeda1, String moeda2, JSONObject cotacaoMoedas, Double valor) {
-        JOptionPane.showMessageDialog(null, "Cotação entre " + moeda1 + " e " + moeda2 + ": " + cotacaoMoedas.getDouble("bid") + " \nResultado da conversão: " + String.format("%.2f", valor * cotacaoMoedas.getDouble("bid")),  "Resultado", JOptionPane.INFORMATION_MESSAGE);
-    }
 
     private static void exibirErro(String mensagem) {
         JOptionPane.showMessageDialog(null, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
