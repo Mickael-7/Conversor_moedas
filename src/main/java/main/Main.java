@@ -1,3 +1,5 @@
+package main;
+
 import exceptions.DomainException;
 
 import static view.CotacaoView.inicializarOpcoesDeConversao;
