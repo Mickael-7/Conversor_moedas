@@ -21,7 +21,7 @@ public class CotacaoView {
         opcoesDeConversao = new HashMap<>();
         opcoesDeConversao.put(Moedas.USD, Arrays.asList(Moedas.BRL, Moedas.EUR, Moedas.JPY, Moedas.CAD));
         opcoesDeConversao.put(Moedas.BTC, Arrays.asList(Moedas.USD, Moedas.EUR, Moedas.BRL));
-        opcoesDeConversao.put(Moedas.EUR, Arrays.asList(Moedas.EUR, Moedas.XRP, Moedas.BTC, Moedas.ETH, Moedas.BRL));
+        opcoesDeConversao.put(Moedas.EUR, Arrays.asList(Moedas.BRL, Moedas.CAD, Moedas.USD, Moedas.JPY));
         opcoesDeConversao.put(Moedas.ETH, Arrays.asList(Moedas.USD, Moedas.EUR, Moedas.BRL));
         opcoesDeConversao.put(Moedas.BRL, Arrays.asList(Moedas.USD, Moedas.EUR, Moedas.CAD, Moedas.JPY));
         opcoesDeConversao.put(Moedas.CAD, Arrays.asList(Moedas.USD, Moedas.EUR, Moedas.BRL));
@@ -102,7 +102,7 @@ public class CotacaoView {
             try {
                 double valor = Double.parseDouble(valorTexto);
                 mostrarEscolhas(escolha1, escolha2, valor);
-            } catch (NumberFormatException ex) {
+            } catch (NumberFormatException e) {
                 exibirMensagemErro("Digite um valor numérico válido.");
             }
         } else {
@@ -112,7 +112,7 @@ public class CotacaoView {
 
     private static void exibirMensagemErro(String mensagem) {
         JOptionPane.showMessageDialog(null, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
-        mostrarOpcoes();
+
     }
 
     private static void atualizarOpcoesComboBox2() {
