@@ -1,4 +1,4 @@
-import controller.DomainException;
+import exceptions.DomainException;
 
 import static view.CotacaoView.inicializarOpcoesDeConversao;
 import static view.CotacaoView.mostrarOpcoes;
