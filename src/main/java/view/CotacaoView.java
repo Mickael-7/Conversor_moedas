@@ -78,7 +78,6 @@ public class CotacaoView {
         convertButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Chamando o método processarSelecao() quando o botão for clicado
                 processarSelecao();
             }
         });
@@ -87,15 +86,12 @@ public class CotacaoView {
     }
 
     private static void exibirDialogo(JPanel panel) {
-        JOptionPane optionPane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
-        JDialog dialog = optionPane.createDialog("Escolha suas opções");
-
-        dialog.setPreferredSize(new Dimension(400, 200));
-        dialog.setVisible(true);
-
-        if ((Integer) optionPane.getValue() == JOptionPane.OK_OPTION) {
-            processarSelecao();
-        }
+        JFrame frame = new JFrame("Escolha suas opções");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.getContentPane().add(panel);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private static void processarSelecao() {
