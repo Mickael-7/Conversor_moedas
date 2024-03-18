@@ -127,7 +127,9 @@ public class CotacaoView {
         frame.getContentPane().add(panel);
         frame.pack();
         frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
         frame.setVisible(true);
+
     }
 
     private static void processarSelecao(JLabel resultadoLabel) {
