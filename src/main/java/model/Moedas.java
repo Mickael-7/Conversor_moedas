@@ -9,7 +9,7 @@ public enum Moedas {
     ETH("Ethereum"),
     BRL("Real Brasileiro"),
     CAD("Dólar Canadense"),
-    XRP("xrp"),
+    XRP("XRP"),
     JPY("Iene Japonês");
 
     private final String descricao;
