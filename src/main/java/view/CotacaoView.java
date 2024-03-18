@@ -8,8 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.*;
+import java.util.Locale;
+import java.util.Map;
 
 public class CotacaoView {
     private static JComboBox<Moedas> comboBox1;
@@ -88,14 +94,19 @@ public class CotacaoView {
             }
         });
 
-
-        textField.addActionListener(new ActionListener() {
+        textField.addKeyListener(new KeyListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                processarSelecao(resultadoLabel);
-            }
-        });
+            public void keyTyped(KeyEvent e) {}
 
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    processarSelecao(resultadoLabel);
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
         return panel;
     }
 
