@@ -173,7 +173,7 @@ public class CotacaoView {
     public static void mostrarEscolhas(Moedas escolha1, Moedas escolha2, double valor, JLabel resultadoLabel) {
         try {
             double resultado = CotacaoController.buscarCotacoes(escolha1.toString(), escolha2.toString(), valor);
-            resultadoLabel.setText(String.format("%.2f %s", resultado * valor, escolha2));
+            resultadoLabel.setText(String.format("%.2f %s", resultado, escolha2));
 
 
         } catch (Exception e) {

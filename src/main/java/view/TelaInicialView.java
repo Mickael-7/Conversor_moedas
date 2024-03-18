@@ -10,9 +10,6 @@ import static view.CotacaoView.mostrarOpcoes;
 
 public class TelaInicialView {
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(TelaInicialView::exibirTelaInicial);
-    }
 
     public static void exibirTelaInicial() {
         JFrame frame = new JFrame("Conversor de Moedas");

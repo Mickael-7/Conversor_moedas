@@ -1,12 +1,15 @@
 package main;
 
-import static view.CotacaoView.inicializarOpcoesDeConversao;
-import static view.CotacaoView.mostrarOpcoes;
+import view.TelaInicialView;
+
+import javax.swing.*;
+
+
 
 public class Main {
     public static void main(String[] args) {
-        inicializarOpcoesDeConversao();
-        mostrarOpcoes();
+        SwingUtilities.invokeLater(TelaInicialView::exibirTelaInicial);
     }
+
 }
  
