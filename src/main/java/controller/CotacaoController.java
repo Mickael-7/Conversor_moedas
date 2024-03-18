@@ -1,23 +1,35 @@
 package controller;
 
-import javax.swing.JOptionPane;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import exceptions.CotacaoException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
-import org.json.JSONObject;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class CotacaoController {
     private static final String API_URL = "https://economia.awesomeapi.com.br/json/last/";
 
-    public static double buscarCotacoes(String moeda1, String moeda2, Double valor ) {
-            JSONObject moedaData = null;
+    public static double buscarCotacoes(String moeda1, String moeda2, Double valor) throws CotacaoException {
+        try {
+            JSONObject moedaData = obterMoedaData(moeda1, moeda2);
+            if (moedaData != null && moedaData.has("bid")) {
+                return moedaData.getDouble("bid") * valor;
+            } else {
+                throw new CotacaoException("As informações da cotação estão incompletas ou indisponíveis.");
+            }
+        } catch (CotacaoException e) {
+            throw new CotacaoException("Erro ao buscar cotações: " + e.getMessage());
+        }
+    }
+
+    private static JSONObject obterMoedaData(String moeda1, String moeda2) throws CotacaoException {
+        HttpURLConnection connection = null;
         try {
             URL url = new URL(API_URL + moeda1 + "-" + moeda2);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-            
 
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -29,20 +41,16 @@ public class CotacaoController {
                 }
                 in.close();
 
-                JSONObject jsonResponse = new JSONObject(response.toString());
-                 moedaData =jsonResponse.getJSONObject(moeda1 + moeda2);
-              
+                return new JSONObject(response.toString()).optJSONObject(moeda1 + moeda2);
             } else {
-                exibirErro("Erro na requisição à API: Código " + responseCode);
+                throw new CotacaoException("Erro na requisição à API: Código " + responseCode);
             }
         } catch (Exception e) {
-            exibirErro("Erro ao obter cotações: " + e.getMessage());
+            throw new CotacaoException("Erro na requisição à API: " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
-        return moedaData.getDouble("bid");
-    }
-
-
-    private static void exibirErro(String mensagem) {
-        JOptionPane.showMessageDialog(null, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
     }
 }

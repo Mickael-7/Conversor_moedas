@@ -1,6 +1,7 @@
 package view;
 
 import controller.CotacaoController;
+import exceptions.ViewException;
 import model.Moedas;
 import org.jetbrains.annotations.NotNull;
 
@@ -117,17 +118,20 @@ public class CotacaoView {
             try {
                 double valor = Double.parseDouble(valorTexto);
                 if (valor <= 0) {
-                    exibirMensagemErro("Digite um valor positivo", resultadoLabel);
+                    throw new ViewException("Digite um valor válido");
                 } else {
                     mostrarEscolhas(escolha1, escolha2, valor, resultadoLabel);
                 }
             } catch (NumberFormatException e) {
                 exibirMensagemErro("Digite um valor numérico válido.", resultadoLabel);
+            } catch (ViewException e) {
+                exibirMensagemErro("Digite um valor para continuar.", resultadoLabel);
             }
         } else {
             exibirMensagemErro("Digite um valor para continuar.", resultadoLabel);
         }
     }
+
 
 
     private static void exibirMensagemErro(String mensagem, JLabel resultadoLabel) {
