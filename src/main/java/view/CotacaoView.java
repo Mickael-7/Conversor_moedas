@@ -113,7 +113,7 @@ public class CotacaoView {
 
 
     private static void exibirDialogo(JPanel panel) {
-        JFrame frame = new JFrame("Escolha suas opções");
+        JFrame frame = new JFrame("Conversor de Moedas");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().add(panel);
         frame.pack();
