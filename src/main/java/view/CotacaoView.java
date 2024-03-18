@@ -60,6 +60,7 @@ public class CotacaoView {
         JLabel resultadoLabel = new JLabel();
 
         JButton convertButton = new JButton("Converter");
+        convertButton.setBackground(new Color(60, 179, 113));
 
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));

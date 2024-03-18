@@ -39,7 +39,7 @@ public class TelaInicialView {
         panel.add(new JScrollPane(moedasTextArea), BorderLayout.CENTER);
 
         JButton abrirConversorButton = new JButton("Abrir Conversor");
-
+        abrirConversorButton.setBackground(new Color(60, 179, 113));
         abrirConversorButton.addActionListener(e -> abrirConversor(frame));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
