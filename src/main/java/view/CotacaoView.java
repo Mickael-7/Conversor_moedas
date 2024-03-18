@@ -26,13 +26,21 @@ public class CotacaoView {
 
     public static void inicializarOpcoesDeConversao() {
         opcoesDeConversao = new HashMap<>();
-        opcoesDeConversao.put(Moedas.USD, Arrays.asList(Moedas.BRL, Moedas.EUR, Moedas.JPY, Moedas.CAD));
+        opcoesDeConversao.put(Moedas.USD, Arrays.asList(Moedas.BRL, Moedas.EUR, Moedas.JPY, Moedas.CAD, Moedas.GBP, Moedas.ARS, Moedas.CNY, Moedas.INR, Moedas.RUB));
         opcoesDeConversao.put(Moedas.BTC, Arrays.asList(Moedas.USD, Moedas.EUR, Moedas.BRL));
-        opcoesDeConversao.put(Moedas.EUR, Arrays.asList(Moedas.BRL, Moedas.CAD, Moedas.USD, Moedas.JPY));
+        opcoesDeConversao.put(Moedas.EUR, Arrays.asList(Moedas.BRL, Moedas.CAD, Moedas.USD, Moedas.JPY, Moedas.GBP, Moedas.ARS, Moedas.CNY, Moedas.INR, Moedas.RUB));
         opcoesDeConversao.put(Moedas.ETH, Arrays.asList(Moedas.USD, Moedas.EUR, Moedas.BRL));
-        opcoesDeConversao.put(Moedas.BRL, Arrays.asList(Moedas.USD, Moedas.EUR, Moedas.CAD, Moedas.JPY));
+        opcoesDeConversao.put(Moedas.BRL, Arrays.asList(Moedas.USD, Moedas.EUR, Moedas.CAD, Moedas.JPY, Moedas.GBP, Moedas.ARS, Moedas.CNY, Moedas.INR, Moedas.RUB));
         opcoesDeConversao.put(Moedas.CAD, Arrays.asList(Moedas.USD, Moedas.EUR, Moedas.BRL));
         opcoesDeConversao.put(Moedas.JPY, Arrays.asList(Moedas.BRL, Moedas.USD, Moedas.EUR));
+        opcoesDeConversao.put(Moedas.GBP, Arrays.asList(Moedas.BRL, Moedas.USD, Moedas.EUR));
+        opcoesDeConversao.put(Moedas.ARS, Arrays.asList(Moedas.BRL, Moedas.USD, Moedas.EUR));
+        opcoesDeConversao.put(Moedas.DOGE, Arrays.asList(Moedas.BRL, Moedas.USD, Moedas.EUR));
+        opcoesDeConversao.put(Moedas.LTC, Arrays.asList(Moedas.BRL, Moedas.USD, Moedas.EUR));
+        opcoesDeConversao.put(Moedas.CNY, Arrays.asList(Moedas.BRL, Moedas.USD, Moedas.EUR));
+        opcoesDeConversao.put(Moedas.INR, Arrays.asList(Moedas.BRL, Moedas.USD, Moedas.EUR));
+        opcoesDeConversao.put(Moedas.RUB, Arrays.asList(Moedas.BRL, Moedas.USD, Moedas.EUR));
+        opcoesDeConversao.put(Moedas.XRP, Arrays.asList(Moedas.BRL, Moedas.USD, Moedas.EUR));
     }
 
     public static void mostrarOpcoes() {
@@ -43,7 +51,7 @@ public class CotacaoView {
 
     private static @NotNull JPanel configurarInterface() {
         Locale.setDefault(Locale.ENGLISH);
-        Moedas[] opcoes1 = {Moedas.USD, Moedas.BTC, Moedas.EUR, Moedas.ETH, Moedas.BRL, Moedas.CAD, Moedas.JPY};
+        Moedas[] opcoes1 = {Moedas.USD, Moedas.EUR, Moedas.BRL, Moedas.CAD, Moedas.JPY, Moedas.GBP, Moedas.ARS, Moedas.CNY, Moedas.RUB, Moedas.INR, Moedas.BTC, Moedas.ETH, Moedas.DOGE, Moedas.LTC, Moedas.XRP};
         Moedas[] opcoes2 = {};
 
         comboBox1 = new JComboBox<>(opcoes1);

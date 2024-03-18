@@ -10,7 +10,14 @@ public enum Moedas {
     BRL("Real Brasileiro"),
     CAD("Dólar Canadense"),
     XRP("XRP"),
-    JPY("Iene Japonês");
+    JPY("Iene Japonês"),
+    GBP("Libra Esterlina"),
+    ARS("Peso Argentino"),
+    DOGE("Dogecoin"),
+    LTC("Litecoin"),
+    CNY("Yuna Chinês"),
+    INR("Rúpia Indiana"),
+    RUB("Rublo Russo");
 
     private final String descricao;
 
