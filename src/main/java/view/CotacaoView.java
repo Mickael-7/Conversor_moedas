@@ -147,7 +147,7 @@ public class CotacaoView {
             } catch (NumberFormatException e) {
                 exibirMensagemErro("Digite um valor numérico válido.", resultadoLabel);
             } catch (ViewException e) {
-                exibirMensagemErro("Digite um valor para continuar.", resultadoLabel);
+                exibirMensagemErro("Digite um valor positivo para continuar.", resultadoLabel);
             }
         } else {
             exibirMensagemErro("Digite um valor para continuar.", resultadoLabel);
